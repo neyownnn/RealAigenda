@@ -1,0 +1,16 @@
+{
+  "rows": 71769,
+  "test_accuracy": 0.642,
+  "test_roc_auc": 0.676,
+  "majority_baseline": 0.584,
+  "feature_importance": {
+    "hour": 0.081,
+    "in_peak": 0.177,
+    "priority": 0.053,
+    "day_load": 0.136,
+    "adherence": 0.508,
+    "distraction": 0.028,
+    "stress_sleep": 0.016
+  },
+  "note": "Scored on held-out SYNTHETIC students; real-world accuracy is unknown until real logs exist."
+}
