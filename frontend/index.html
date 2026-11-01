@@ -16,8 +16,8 @@ body{background:var(--bg);color:var(--ink);font:15px/1.45 "DM Sans",system-ui,sa
 h1,h2,h3,.serif{font-family:Fraunces,Georgia,serif;margin:0}
 h1{font-size:30px}h2{font-size:18px;margin-bottom:12px}
 button,input,select{font:inherit;color:inherit}
-.app{display:flex;min-height:100%}
-nav{width:220px;background:#0b4a0b;color:#fff;padding:20px 14px;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.app{display:flex;align-items:flex-start;min-height:100%}
+nav{width:220px;background:#0b4a0b;color:#fff;padding:20px 14px;display:flex;flex-direction:column;gap:4px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;align-self:flex-start}
 nav .logo{font:700 26px Fraunces,serif;padding:0 10px 14px}nav .logo b{color:var(--gold)}
 nav button{background:none;border:0;color:#e8f1e3;text-align:left;padding:9px 12px;border-radius:10px;cursor:pointer}
 nav button.on{background:rgba(255,255,255,.16);font-weight:700;color:#fff}
