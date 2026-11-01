@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AIgenda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fffdf8;--card:#fffdf8;--ink:#14210f;--mute:#667060;--line:#e5dcc8;--g:#0b4a0b;--g2:#2c6a2c;--gold:#f5b81c;--soft:#e3eedc;--track:#ddd3c0;--blue:#3b6aa8;--warn:#fdeec3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a12;--card:#1b2418;--ink:#f1efe4;--mute:#a3ad9c;--line:#33402e;--g:#0a2d0a;--g2:#7fc17f;--soft:#26381f;--track:#33402e;--warn:#4a3d12;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141a12;--card:#1b2418;--ink:#f1efe4;--mute:#a3ad9c;--line:#33402e;--g:#0a2d0a;--g2:#7fc17f;--soft:#26381f;--track:#33402e;--warn:#4a3d12;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 "DM Sans",system-ui,sans-serif}
+h1,h2,h3,.serif{font-family:Fraunces,Georgia,serif;margin:0}
+h1{font-size:30px}h2{font-size:18px;margin-bottom:12px}
+button,input,select{font:inherit;color:inherit}
+.app{display:flex;min-height:100%}
+nav{width:220px;background:#0b4a0b;color:#fff;padding:20px 14px;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+nav .logo{font:700 26px Fraunces,serif;padding:0 10px 14px}nav .logo b{color:var(--gold)}
+nav button{background:none;border:0;color:#e8f1e3;text-align:left;padding:9px 12px;border-radius:10px;cursor:pointer}
+nav button.on{background:rgba(255,255,255,.16);font-weight:700;color:#fff}
+nav .me{margin-top:auto;font-size:12px;border-top:1px solid rgba(255,255,255,.2);padding:12px 10px 0;color:#d4e3cc}
+nav .me a{color:var(--gold);cursor:pointer;display:block;margin-top:6px}
+main{flex:1;padding:28px 32px;max-width:1100px;min-width:0}
+.sub{color:var(--mute);margin:2px 0 20px}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1.5fr 1fr}.g2e{grid-template-columns:1fr 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.stat b{font:700 28px Fraunces,serif;display:block}.stat span{color:var(--mute);font-size:13px}
+.row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border:0}.row .t{width:76px;color:var(--mute);font-size:13px}.row .l{flex:1}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--g2)}.dot.hobby{background:var(--blue)}.dot.rest{background:var(--gold)}.dot.class{background:var(--mute)}
+.row.done .l,.row.done .t{text-decoration:line-through;color:var(--mute)}
+.pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--g2)}
+.pill.next{background:var(--warn);color:var(--ink)}.pill.ai{background:var(--gold);color:#14210f}
+.btn{background:#0b4a0b;color:#fff;border:1px solid #0b4a0b;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer}
+.btn.o{background:none;color:var(--g2);border-color:var(--g2)}.btn.sm{padding:5px 10px;font-size:13px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
+input,select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.bar{height:8px;background:var(--track);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#0b4a0b}
+:root:not([data-theme="light"]) .bar i{background:var(--g2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{border:1px solid var(--line);border-radius:99px;padding:5px 12px;cursor:pointer;background:none}
+.chip.on{background:#0b4a0b;color:#fff;border-color:#0b4a0b}
+.center{text-align:center}.mt{margin-top:14px}
+.auth{max-width:380px;margin:8vh auto;padding:0 18px}
+.auth .logo{font:700 40px Fraunces,serif;color:var(--g2)}.auth .logo b{color:var(--gold)}
+.cols{display:flex;gap:8px;align-items:flex-end;height:120px}.cols div{flex:1;text-align:center;font-size:12px;color:var(--mute)}
+.cols i{display:block;background:var(--g2);border-radius:6px 6px 0 0;margin-bottom:4px}
+.note{font-size:12px;color:var(--mute);margin-top:10px}
+.sr{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}.sr span:first-child{width:26px;font:700 18px Fraunces,serif;color:var(--g2)}.sr .l{flex:1}
+@media(max-width:820px){.app{flex-direction:column}nav{width:100%;flex-direction:row;overflow-x:auto;padding:10px;align-items:center}nav .logo{padding:0 10px 0 4px}nav button{white-space:nowrap}nav .me{display:none}main{padding:20px 16px}.g4{grid-template-columns:1fr 1fr}.g2,.g2e{grid-template-columns:1fr}}
+
+.hero{background:#0b4a0b;color:#fff;border-radius:18px;padding:40px 34px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:38px;line-height:1.1}.hero h1 em{color:var(--gold);font-style:normal}.hero p{color:#cfe0c7;max-width:340px}
+.authwrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px;margin:7vh auto;padding:0 18px}
+.tabs{display:flex;gap:6px;margin-bottom:6px}.tabs button{flex:1;background:none;border:1px solid var(--line);border-radius:10px;padding:8px;cursor:pointer}
+.tabs button.on{background:#0b4a0b;color:#fff;border-color:#0b4a0b}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#14210f;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:9;max-width:90vw}
+.toast.err{background:#b3261e}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{border:1px solid var(--line);border-radius:12px;padding:14px}
+.step .n{width:24px;height:24px;border-radius:50%;background:var(--g2);color:#fff;display:inline-grid;place-items:center;font-size:13px;margin-bottom:6px}
+.step.cur .n{background:var(--gold);color:#14210f}.step small{color:var(--mute);display:block}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.tile{background:var(--soft);border-radius:10px;padding:12px}.tile b{font:700 22px Fraunces,serif;display:block}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#14210f}.btn:disabled{opacity:.5;cursor:not-allowed}
+.rate{display:flex;gap:6px;margin-top:4px}.rate button{flex:1;border:1px solid var(--line);background:none;border-radius:8px;padding:6px;cursor:pointer}.rate button.on{background:#0b4a0b;color:#fff;border-color:#0b4a0b}
+.ok{color:var(--g2);font-size:13px}.link{color:var(--g2);font-weight:700}
+.row select{width:auto;padding:4px 6px;font-size:13px}
+@media(max-width:820px){.authwrap,.steps,.tiles{grid-template-columns:1fr}.hero{padding:26px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=h=>{const x=((h+11)%12)+1;return x+":00 "+(h%24<12?"AM":"PM")};
+const API=location.protocol==="file:"?"http://localhost:8000":"";
+const PEAK={morning:[8,12],afternoon:[13,17],evening:[18,22]};
+const HOBBIES=["Basketball","Gaming","Reading","Music","Gym","Drawing","Cooking","Walking"];
+const TOPICS=["Focus","Procrastination","Sleep","Planning"];
+let S={user:null,view:"dash",authTab:"signup",habits:null,subjects:[],sched:[],goals:[],prog:null,tips:[],summary:null,
+  genStep:0,genMs:0,support:null,topic:null,saving:"",busy:false};
+const tok=()=>{try{return localStorage.getItem("aigenda_token")||""}catch(e){return""}};
+const setTok=t=>{try{t?localStorage.setItem("aigenda_token",t):localStorage.removeItem("aigenda_token")}catch(e){}};
+
+let toastT;function toast(m,err){document.querySelectorAll(".toast").forEach(x=>x.remove());const t=document.createElement("div");t.className="toast"+(err?" err":"");t.textContent=m;document.body.appendChild(t);clearTimeout(toastT);setTimeout(()=>t.remove(),3200)}
+async function api(path,method="GET",body){
+  let r;try{r=await fetch(API+"/api"+path,{method,headers:{"Content-Type":"application/json",Authorization:"Bearer "+tok()},body:body===undefined?undefined:JSON.stringify(body)})}
+  catch(e){throw new Error("Cannot reach the AIgenda server. Is the backend running?")}
+  if(r.status===401&&S.user){logout(true);throw new Error("Your session expired. Please log in again.")}
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok){const m=Array.isArray(d.detail)?d.detail.map(x=>(x.loc||[]).slice(-1)[0]+": "+x.msg).join("; "):d.detail;throw new Error(m||"Something went wrong ("+r.status+")")}
+  return d}
+const guard=fn=>async(...a)=>{try{await fn(...a)}catch(e){toast(e.message,true)}render()};
+
+const peak=()=>PEAK[S.habits?.chrono||"morning"];
+const todo=()=>S.sched.filter(x=>x.kind!=="class");
+const pct=()=>{const t=todo();return t.length?Math.round(t.filter(x=>x.done).length/t.length*100):0};
+const nextIdx=()=>S.sched.findIndex(x=>!x.done&&x.kind!=="class");
+const pill=x=>x.kind==="hobby"?'<span class="pill">Hobby</span>':x.kind==="study"?'<span class="pill">Study</span>':"";
+const first=()=>esc((S.user?.name||"").split(" ")[0]);
+
+async function loadAll(){
+  const [h,sub,sch,g,p,t]=await Promise.all([api("/habits"),api("/subjects"),api("/schedule"),api("/goals"),api("/progress"),api("/tips")]);
+  Object.assign(S,{habits:h,subjects:sub,sched:sch,goals:g,prog:p,tips:t})}
+const refresh=async()=>{const [sch,p,t]=await Promise.all([api("/schedule"),api("/progress"),api("/tips")]);Object.assign(S,{sched:sch,prog:p,tips:t})};
+
+function logout(silent){api("/logout","POST").catch(()=>{});setTok("");S.user=null;S.habits=null;S.view="dash";if(!silent)toast("Logged out");render()}
+
+/* ---------- views ---------- */
+const V={
+dash(){
+  const p=pct(),ni=nextIdx(),r=45,c=2*Math.PI*r,fw=peak(),pr=S.prog||{},wp=pr.week_pct||0;
+  const rows=S.sched.slice(0,9).map((x,i)=>`<div class="row ${x.done?"done":""}"><span class="t">${fmt(x.hour)}</span><i class="dot ${x.kind}"></i><span class="l">${i===ni?"<b>"+esc(x.label)+"</b>":esc(x.label)}</span>${x.done?'<span class="pill">Done</span>':i===ni?'<span class="pill next">Up next</span>':pill(x)}</div>`).join("");
+  const dueWeek=S.goals.filter(g=>g.due_date&&(new Date(g.due_date)-new Date())/864e5<=7&&g.progress<100).length;
+  return `<h1>Good ${new Date().getHours()<12?"morning":new Date().getHours()<18?"afternoon":"evening"}, ${first()}</h1><p class="sub">${new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})} · Your focus window is ${fmt(fw[0])}–${fmt(fw[1])}.</p>
+  <div class="grid g4"><div class="card stat"><b>${wp}%</b><span>Weekly completion</span></div><div class="card stat"><b>${pr.streak||0} ${pr.streak===1?"day":"days"}</b><span>Streak</span></div><div class="card stat"><b>${S.sched.filter(x=>x.kind==="study"&&!x.done).length}</b><span>Study blocks left today</span></div><div class="card stat"><b>${dueWeek}</b><span>Goals due this week</span></div></div>
+  <div class="grid g2 mt"><div class="card"><h2>Today’s schedule</h2>${rows||'<p class="sub">No schedule yet. Fill in your habits and subjects, then generate one.</p>'}<div class="btns"><button class="btn" data-go="sched">Open full schedule</button><button class="btn o" data-go="gen">Regenerate</button></div></div>
+  <div class="grid"><div class="card center"><h2>Today</h2><svg width="130" height="130" viewBox="0 0 110 110" role="img" aria-label="${p}% of today's activities completed"><circle cx="55" cy="55" r="${r}" fill="none" stroke="var(--track)" stroke-width="10"/><circle cx="55" cy="55" r="${r}" fill="none" stroke="var(--g2)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c*p/100} ${c}" transform="rotate(-90 55 55)"/><text x="55" y="61" text-anchor="middle" font-family="Fraunces,serif" font-size="20" fill="currentColor">${p}%</text></svg><p class="note">${pr.today_done||0} of ${pr.today_total||0} activities completed</p></div>
+  <div class="card"><h2>Goals</h2>${S.goals.slice(0,3).map(g=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>${esc(g.title)}</span><b>${g.progress}%</b></div><div class="bar"><i style="width:${g.progress}%"></i></div></div>`).join("")||'<p class="sub" style="margin:0">No goals yet.</p>'}</div>
+  <div class="card"><h2><span class="pill ai">AI</span> Tip of the day</h2><p style="margin:0;color:var(--mute)">${esc(S.tips[0]||"Generate a schedule to get personalized tips.")}</p></div></div></div>`},
+
+habits(){const h=S.habits,hs=k=>[...Array(24).keys()].map(i=>`<option value="${i}" ${h[k]===i?"selected":""}>${fmt(i)}</option>`).join("");
+  const all=[...new Set([...HOBBIES,...h.hobbies])];
+  const rate=(k,q)=>`<label>${q}</label><div class="rate">${[1,2,3,4,5].map(n=>`<button data-rate="${k}|${n}" class="${h[k]===n?"on":""}">${n}</button>`).join("")}</div>`;
+  return `<h1>Your usual day</h1><p class="sub">Tell us how your days normally go so your schedule feels natural.</p>
+  <div class="grid g2e"><div class="card"><h2>Sleep & class times</h2><div class="grid g2e"><div><label>Wake-up time</label><select data-h="wake">${hs("wake")}</select></div><div><label>Bedtime</label><select data-h="sleep">${hs("sleep")}</select></div>
+  <div><label>Classes start</label><select data-h="cs">${hs("cs")}</select></div><div><label>Classes end</label><select data-h="ce">${hs("ce")}</select></div></div></div>
+  <div class="card"><h2>When is your focus sharpest?</h2><div class="chips">${["morning","afternoon","evening"].map(x=>`<button class="chip ${h.chrono===x?"on":""}" data-chrono="${x}">${x[0].toUpperCase()+x.slice(1)}</button>`).join("")}</div><p class="note">Focus window: ${fmt(PEAK[h.chrono][0])}–${fmt(PEAK[h.chrono][1])}. Study blocks are placed here first.</p></div></div>
+  <div class="card mt"><h2>Hobbies & free-time activities</h2><div class="chips">${all.map(x=>`<button class="chip ${h.hobbies.includes(x)?"on":""}" data-hob="${esc(x)}">${esc(x)}</button>`).join("")}</div>
+  <div style="display:flex;gap:10px;margin-top:12px;max-width:340px"><input id="nh" placeholder="Add another hobby" maxlength="60"><button class="btn o" data-act="addhob">+ Add</button></div></div>
+  <div class="card mt"><h2>About your habits <span class="note">(optional, 1 = not at all · 5 = very much)</span></h2><div class="grid g2e"><div>${rate("adherence","I follow my study schedule consistently")}</div><div>${rate("distraction","Social media distracts me when I study")}</div><div>${rate("stress_sleep","Stress or lack of sleep affects my focus")}</div></div><p class="note">These make the AI Scheduler’s predictions about you, not an average student.</p></div>
+  <div class="btns"><button class="btn" data-act="savehab">Save & Continue</button><span class="btn o" style="cursor:default">${esc(S.saving||"Changes save automatically")}</span></div>`},
+
+subjects(){const L=S.subjects;
+  return `<h1>Subjects & priorities</h1><p class="sub">Rank what matters most. #1 gets the best focus hours. (${L.length}/15)</p><div class="card" style="max-width:680px">
+  ${L.map((s,i)=>`<div class="sr"><span>${i+1}</span><span class="l">${esc(s.name)}</span><button class="btn o sm" data-mv="${s.id}|-1" ${i?"":"disabled"} aria-label="Move up">↑</button><button class="btn o sm" data-mv="${s.id}|1" ${i<L.length-1?"":"disabled"} aria-label="Move down">↓</button><button class="btn o sm" data-rm="${s.id}">Remove</button></div>`).join("")||'<p class="sub">Add at least one subject to generate a schedule.</p>'}
+  <div style="display:flex;gap:10px;margin-top:14px"><input id="ns" placeholder="Add a subject" maxlength="120"><button class="btn o" data-act="addsub">+ Add subject</button></div>
+  <div class="btns"><button class="btn gold" data-go="gen" ${L.length?"":"disabled"}>+ Generate my schedule</button></div></div>`},
+
+gen(){const sm=S.summary,st=S.genStep;
+  const step=(i,t,d)=>`<div class="step ${st===i-1&&st<3?"cur":""}"><span class="n">${st>=i?"✓":i}</span><b>${t}</b><small>${d}</small></div>`;
+  const has=S.sched.some(x=>x.kind==="study");
+  return `<h1>Generate your schedule</h1><p class="sub">The AI Scheduler analyzes your habits and priorities, then optimizes your day.</p>
+  <div class="steps">${step(1,"Analyze Habits & Academic Goals",sm?`Found ${sm.free_blocks} free blocks a day, focus peak ${fmt(sm.focus_window[0])}–${fmt(sm.focus_window[1])}, and ${sm.ranked_subjects} ranked subjects.`:"Reads your habits, hobbies and ranked subjects.")}
+  ${step(2,"Optimize Schedule Using AI",sm?"Rule-based heuristic placement, re-scored by the Random Forest.":"Balances study, hobbies and rest by priority.")}
+  ${step(3,"Review your schedule","Accept it, or adjust preferences and regenerate.")}</div>
+  <div class="card mt" style="max-width:760px">${sm?`<h2>Initial schedule · generated in ${(S.genMs/1000).toFixed(1)} seconds</h2>
+  <div class="tiles"><div class="tile"><b>${sm.study_hours} h</b>Study</div><div class="tile"><b>${sm.hobby_hours} h</b>Hobbies</div><div class="tile"><b>${sm.predicted_completion==null?"—":sm.predicted_completion+"%"}</b>Predicted completion</div></div>
+  <p class="note">${sm.study_blocks_in_focus_window} of ${sm.study_hours} study blocks sit in your focus window. The prediction comes from the Random Forest (trained on synthetic data until enough real outcomes are logged).</p>
+  <div class="btns"><button class="btn gold" data-go="sched">Accept & view schedule</button><button class="btn o" data-go="habits">Adjust preferences & regenerate</button><button class="btn o" data-act="gengo">Regenerate</button></div>`
+  :`<h2>Ready when you are</h2><p class="sub" style="margin-top:0">${S.subjects.length} subjects · ${S.habits.hobbies.length} hobbies · focus window ${fmt(peak()[0])}–${fmt(peak()[1])} (${S.habits.chrono})</p>
+  <div class="btns"><button class="btn" data-act="gengo" ${S.subjects.length&&!S.busy?"":"disabled"}>${S.busy?"Generating…":has?"Regenerate schedule":"Generate schedule"}</button></div>${S.subjects.length?"":'<p class="note">Add at least one subject first.</p>'}`}</div>`},
+
+sched(){return `<h1>My schedule</h1><p class="sub">Tick activities off as you go, move them to another hour, or remove ones that don’t fit.</p><div class="card" style="max-width:820px">
+  ${S.sched.map(x=>`<div class="row ${x.done?"done":""}"><select data-time="${x.id}" aria-label="Time" ${x.kind==="class"?"disabled":""}>${[...Array(24).keys()].map(i=>`<option value="${i}" ${i===x.hour?"selected":""}>${fmt(i)}</option>`).join("")}</select><i class="dot ${x.kind}"></i><span class="l">${esc(x.label)}</span>${pill(x)}${x.kind==="class"?"":`<button class="btn o sm" data-tg="${x.id}|${x.done?0:1}">${x.done?"Undo":"Done"}</button>`}<button class="btn o sm" data-del="${x.id}" aria-label="Delete">✕</button></div>`).join("")||'<p class="sub">Nothing yet. Generate a schedule first.</p>'}
+  <div class="btns"><button class="btn o" data-act="gengo">Reset to AI version</button><button class="btn" data-go="gen">Regenerate…</button></div><p class="note">Resetting discards your manual edits. A move into an occupied hour is rejected so nothing overlaps.</p></div>`},
+
+progress(){const pr=S.prog||{week:[]},d=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  return `<h1>Progress & insights</h1><p class="sub">How closely you’re following your schedule.</p>
+  ${pr.enough_data?"":'<div class="card" style="background:var(--warn);margin-bottom:16px">Not enough activity yet. Complete a few scheduled activities and your insights will appear here.</div>'}
+  <div class="grid g4" style="margin-bottom:16px"><div class="card stat"><b>${pr.today_pct||0}%</b><span>Today</span></div><div class="card stat"><b>${pr.week_pct||0}%</b><span>This week (${pr.week_done||0}/${pr.week_total||0})</span></div><div class="card stat"><b>${pr.streak||0}</b><span>Day streak</span></div><div class="card stat"><b>${S.goals.length}</b><span>Active goals</span></div></div>
+  <div class="grid g2e"><div class="card"><h2>Completion · last 7 days</h2><div class="cols">${pr.week.map(w=>`<div><i style="height:${Math.max(w.pct,2)}px" title="${w.pct}%"></i>${d[new Date(w.day+"T00:00").getDay()]}<br>${w.pct}%</div>`).join("")||'<p class="sub">No data yet.</p>'}</div></div>
+  <div class="card"><h2><span class="pill ai">AI</span> Tips & reminders</h2>${S.tips.map(t=>`<p style="color:var(--mute);margin:0 0 10px">${esc(t)}</p>`).join("")}</div></div>
+  <div class="btns"><button class="btn o" data-go="goals">Set a goal</button></div>`},
+
+study(){const s=S.support;
+  return `<h1>✦ AI Study Support</h1><p class="sub">Study tips, resources and time-management advice based on your habits and progress.</p>
+  ${s&&s.note?`<div class="card" style="background:var(--warn);margin-bottom:16px">${esc(s.note)}</div>`:""}
+  <div class="grid g2e"><div class="card"><h2>Study tips</h2>${(s?s.tips:S.tips).map(t=>`<p style="color:var(--mute);margin:0 0 10px">${esc(t)}</p>`).join("")}</div>
+  <div class="card"><h2>Resource suggestions</h2>${s?s.resources.map(r=>`<p style="margin:0 0 8px"><a class="link" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></p>`).join(""):'<p class="sub" style="margin:0">Loading…</p>'}</div></div>
+  <div class="card mt"><h2>Time-management advice</h2>${s?s.advice.map(t=>`<p style="color:var(--mute);margin:0 0 10px">${esc(t)}</p>`).join(""):""}
+  <label>Need something more specific?</label><div class="chips">${TOPICS.map(k=>`<button class="chip ${S.topic===k?"on":""}" data-tip="${k}">${k}</button>`).join("")}</div>
+  <div style="display:flex;gap:10px;margin-top:12px"><input id="ask" placeholder="e.g. How should I prepare for Friday’s DSA quiz?" maxlength="300"><button class="btn" data-act="ask">Get advice</button></div></div>`},
+
+goals(){const min=new Date().toISOString().slice(0,10);
+  return `<h1>Goals & milestones</h1><p class="sub">Optional. Set targets and track them over time. (${S.goals.length}/10)</p><div class="grid g2e"><div class="card"><h2>Set a new goal</h2>
+  <label>Goal</label><input id="ng" placeholder="Finish Systems Analysis project" maxlength="200"><label>Target date</label><input id="nd" type="date" min="${min}">
+  <div class="btns"><button class="btn" data-act="addgoal">Save goal</button></div></div>
+  <div class="card"><h2>Active goals</h2>${S.goals.map(g=>`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>${esc(g.title)}${g.due_date?`<br><span class="note">Due ${esc(String(g.due_date).slice(0,10))}</span>`:""}</span><span style="white-space:nowrap"><b>${g.progress}%</b> <button class="btn o sm" data-gp="${g.id}|${Math.min(100,g.progress+10)}">+10%</button> <button class="btn o sm" data-gd="${g.id}" aria-label="Delete goal">✕</button></span></div><div class="bar"><i style="width:${g.progress}%"></i></div></div>`).join("")||'<p class="sub" style="margin:0">No goals yet.</p>'}</div></div>`}
+};
+
+const NAV=[["dash","Dashboard"],["habits","Habits & Hobbies"],["subjects","Subjects"],["gen","Generate Schedule"],["sched","My Schedule"],["progress","Progress"],["study","✦ AI Study Support"],["goals","Goals"]];
+function render(){
+  if(!S.user){const su=S.authTab==="signup";
+    $("#root").innerHTML=`<div class="authwrap"><div class="hero"><div class="serif" style="font-size:30px;margin-bottom:18px">AI<b style="color:var(--gold)">genda</b></div><h1>Plan the week that fits <em>you.</em></h1><p>AIgenda learns your habits, hobbies and priorities, then builds a study schedule around how you actually work.</p></div>
+    <div class="card"><div class="tabs"><button class="${su?"on":""}" data-tab="signup">Create account</button><button class="${su?"":"on"}" data-tab="login">Log in</button></div><h2 style="margin-top:12px">${su?"Create your account":"Welcome back"}</h2>
+    <form id="authf" novalidate>${su?'<label>Full name</label><input id="un" placeholder="Juan Dela Cruz" autocomplete="name"><label>Program</label><input id="up" placeholder="BS Computer Science">':""}
+    <label>Email</label><input id="ue" type="email" placeholder="you@school.edu" autocomplete="email"><label>Password</label><input id="pw" type="password" placeholder="At least 6 characters" autocomplete="${su?"new-password":"current-password"}">
+    ${su?'<label>Confirm password</label><input id="pw2" type="password" autocomplete="new-password">':""}<p id="err" class="note" style="color:#b3261e;min-height:16px"></p>
+    <button class="btn" style="width:100%" type="submit">${su?"Create account":"Log in"}</button></form>
+    <p class="note center">${su?'Already have an account? <a class="link" data-tab="login" style="cursor:pointer">Log in</a>':'New here? <a class="link" data-tab="signup" style="cursor:pointer">Create an account</a>'}</p></div></div>`;return}
+  if(!S.habits){$("#root").innerHTML='<p class="center mt">Loading…</p>';return}
+  $("#root").innerHTML=`<div class="app"><nav><div class="logo">AI<b>genda</b></div>${NAV.map(([k,l])=>`<button class="${S.view===k?"on":""}" data-go="${k}">${l}</button>`).join("")}<div class="me">${esc(S.user.name)}<br>${esc(S.user.program)}<a data-act="out">Log out</a></div></nav><main>${V[S.view]()}</main></div>`;
+}
+
+/* ---------- actions ---------- */
+async function enter(d){setTok(d.token);S.user={name:d.name,program:d.program};S.habits=null;render();await loadAll();render()}
+let saveT;function autosave(){S.saving="Saving…";clearTimeout(saveT);saveT=setTimeout(async()=>{try{S.habits=await api("/habits","PUT",S.habits);S.saving="Auto-saved "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}catch(e){S.saving="Not saved";toast(e.message,true)}if(S.view==="habits")render()},900)}
+async function generateNow(){
+  if(!S.subjects.length)throw new Error("Add at least one subject before generating a schedule");
+  S.busy=true;S.summary=null;S.genStep=1;S.view="gen";render();const t0=performance.now();
+  try{await api("/habits","PUT",S.habits);S.sched=await api("/schedule/generate","POST");S.genStep=2;render();S.summary=await api("/schedule/summary");S.genMs=performance.now()-t0;S.genStep=3;await refresh()}
+  finally{S.busy=false;if(S.genStep<3)S.genStep=0}}
+async function loadSupport(ask){S.support=null;render();S.support=await api("/support","POST",ask||{})}
+
+document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-go],[data-tab]");if(t&&Object.keys(t.dataset).length)onClick(t)});
+const onClick=guard(async t=>{
+  const d=t.dataset;
+  if(d.tab){S.authTab=d.tab;return}
+  if(d.go){S.view=d.go;if(d.go==="gen"&&!S.busy){S.summary=null;S.genStep=0}if(d.go==="study")loadSupport({topic:S.topic});if(d.go!=="dash"&&d.go!=="habits"&&d.go!=="sched")await refresh();return}
+  if(d.act==="out"){logout();return}
+  if(d.act==="savehab"){S.habits=await api("/habits","PUT",S.habits);S.saving="Saved";S.view="subjects";toast("Habits saved");return}
+  if(d.act==="addhob"){const v=$("#nh").value.trim();if(v&&!S.habits.hobbies.includes(v)){S.habits.hobbies.push(v);autosave()}return}
+  if(d.hob){const a=S.habits.hobbies,i=a.indexOf(d.hob);i<0?a.push(d.hob):a.splice(i,1);autosave();return}
+  if(d.chrono){S.habits.chrono=d.chrono;autosave();return}
+  if(d.rate){const[k,n]=d.rate.split("|");S.habits[k]=S.habits[k]===+n?null:+n;autosave();return}
+  if(d.act==="addsub"){const v=$("#ns").value.trim();if(v)S.subjects=await api("/subjects","POST",{name:v});return}
+  if(d.mv){const[id,s]=d.mv.split("|"),ids=S.subjects.map(x=>x.id),i=ids.indexOf(+id),j=i+ +s;if(ids[j]!=null){[ids[i],ids[j]]=[ids[j],ids[i]];S.subjects=await api("/subjects/order","PUT",ids)}return}
+  if(d.rm){S.subjects=await api("/subjects/"+d.rm,"DELETE");return}
+  if(d.act==="gengo"){await generateNow();if(S.view==="sched"||t.textContent.includes("Reset"))S.view="sched";if(S.view==="sched")toast("Schedule reset to the AI version");return}
+  if(d.tg){const[id,v]=d.tg.split("|");S.sched=await api("/schedule/"+id,"PATCH",{done:v==="1"});await refresh();return}
+  if(d.del){S.sched=await api("/schedule/"+d.del,"DELETE");await refresh();return}
+  if(d.tip){S.topic=S.topic===d.tip?null:d.tip;await loadSupport({topic:S.topic});return}
+  if(d.act==="ask"){const q=$("#ask").value.trim();S.topic=null;await loadSupport(q?{question:q}:{});return}
+  if(d.act==="addgoal"){const v=$("#ng").value.trim();if(!v)throw new Error("Enter a goal first");S.goals=await api("/goals","POST",{title:v,due_date:$("#nd").value||null});return}
+  if(d.gp){const[id,p]=d.gp.split("|");S.goals=await api(`/goals/${id}?progress=${p}`,"PATCH");return}
+  if(d.gd){S.goals=await api("/goals/"+d.gd,"DELETE");return}
+});
+document.addEventListener("change",e=>{if(e.target.dataset.h||e.target.dataset.time)onChange(e.target)});
+const onChange=guard(async el=>{
+  if(el.dataset.h){const k=el.dataset.h;S.habits[k]=+el.value;autosave();return}
+  if(el.dataset.time){try{S.sched=await api("/schedule/"+el.dataset.time,"PATCH",{hour:+el.value})}catch(err){toast(err.message,true);S.sched=await api("/schedule")}}
+});
+document.addEventListener("submit",async e=>{
+  e.preventDefault();const su=S.authTab==="signup",err=m=>{$("#err").textContent=m};
+  const email=$("#ue").value.trim(),pw=$("#pw").value;
+  if(!/^\S+@\S+\.\S+$/.test(email))return err("Enter a valid email address.");
+  if(pw.length<6)return err("Password must be at least 6 characters.");
+  let body={email,password:pw};
+  if(su){const n=$("#un").value.trim();if(!n)return err("Enter your full name.");if(pw!==$("#pw2").value)return err("Passwords don’t match.");body={...body,name:n,program:$("#up").value.trim()||"Student"}}
+  try{await enter(await api(su?"/register":"/login","POST",body));if(su){S.view="habits";toast("Account created. Tell us about your day.")}render()}
+  catch(x){S.user=null;render();$("#err").textContent=x.message}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="ns")$("[data-act=addsub]").click();if(e.key==="Enter"&&e.target.id==="ng")$("[data-act=addgoal]").click()});
+
+(async()=>{if(!tok()){render();return}
+  try{S.user=await api("/me");render();await loadAll()}catch(e){if(!S.user)setTok("");if(S.user)toast(e.message,true)}render()})();
+</script>
+</body>
+</html>
